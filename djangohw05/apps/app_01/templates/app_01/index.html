@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Assignment: Session Words 2018 10 20 Cheung A</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'app_01/css/style.css' %}">
+</head>
+<body>
+    <div class="container">
+            <div class="row">
+                <div class="col-sm-6">                          
+                    <form action="/add_word/" method="post"> 
+                        {% csrf_token %}    
+                        <div class="form-group">
+                            <h1>Add a new word</h1>
+                            <textarea class="form-control" name="word" rows="1"></textarea>
+                        </div>
+                        <ul>
+                            <label for="color">Choose Color:</label>
+                            <li><input type="radio" name="color" value="red" checked> Red</li>
+                            <li><input type="radio" name="color" value="green"> Green</li>  
+                            <li><input type="radio" name="color" value="blue"> Blue</li>                             
+                        </ul>
+                        <label for="big_font">show in BIG fonts!</label>
+                        <input type="hidden" name="big_font" value="small">
+                        <input type="checkbox" name="big_font" value="big"><br>
+                        <button class="btn btn-info btn-lg btn-block" type="submit">Add to Session</button>
+                    </form>
+                </div>
+                <div class="col-sm-6">
+                    <br>
+                    <a href="/reset" class="btn btn-danger btn-lg btn-block">Clear Session</a>    
+                    <div class="words">
+                    <ul>
+                    {% for word in request.session.word_list %}
+                        <br>
+                        <li class="{{word.color}} {{word.big_font}}">{{word.word}} {{time}}</li>
+                    {% endfor %} 
+                    </ul>
+                    </div>
+                </div>
+            </div>
+    </div>
+</body>
+</html>
